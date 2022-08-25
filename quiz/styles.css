@@ -21,6 +21,11 @@ body{
     overflow: hidden;
 }
 
+.quiz_result{
+    padding: 20px;
+    text-align: center;
+}
+
 .quiz-container .title{
     font-size: 20px;
     margin-bottom: 15px;
