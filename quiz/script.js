@@ -57,7 +57,7 @@ function showQuestion(index) {
 function addEventToSubmit() {
     const submitElement = document.getElementById('submit');
     submitElement.addEventListener('click', (event) => {
-        answer();
+        checkAnswer();
 
         if (currentQuestion < questions.length - 1) {
             currentQuestion++
@@ -70,7 +70,7 @@ function addEventToSubmit() {
 }
 
 
-function answer() {
+function checkAnswer() {
     if (!hasAnswered()) {
         alert('Please select your answer!');
         return;
@@ -80,7 +80,7 @@ function answer() {
         return;
     }
 
-    if (verifyAnswer(questions[currentQuestion])) {
+    if (isAnswerCorrect(questions[currentQuestion])) {
         correctAnswers++;
     }
 
@@ -92,7 +92,7 @@ function showResult() {
     questionsContainerElement.innerHTML = `<div class='quiz_result'> You Answered <strong>${correctAnswers}</strong> out of  ${questions.length} </div>`
 }
 
-function verifyAnswer(question) {
+function isAnswerCorrect(question) {
     const options = document.getElementsByName('option');
     for (let i = 0; i < options.length; i++) {
         const element = options[i];
