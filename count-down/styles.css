@@ -34,13 +34,15 @@ h1{
     flex-direction: column;
 }
 
-.count-down span{
 
-}
 
-strong{
+.count-down strong{
     font-weight: bold;
     font-size: 6rem;
     line-height: 1;
     margin: 0 2rem;
+    width: 150px;
+    text-align: center;
 }
+
+
