@@ -3,3 +3,138 @@
 * {
     box-sizing: border-box;
 }
+
+:root {
+    font-size: 10px;
+    background-color: orange;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    background: #ece9e6; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ffffff, #ece9e6); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ffffff, #ece9e6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* img {
+    max-width: 100%;
+} */
+
+.container {
+    width: 375px;
+    height: 500px;
+    background-color: #fff;
+    overflow-y: scroll;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    gap: 10px;
+}
+
+header input {
+    border: none;
+    background: #eee;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+}
+
+header button {
+    background-color: transparent;
+    border: none;
+    color: #eee;
+    font-size: 1.5rem;
+}
+
+.favorite-container {
+    text-align: center;
+    background-color: rgba(233, 199, 255);
+    padding: 1.5rem;
+}
+
+.favorite-meals {
+    display: flex;
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    gap: 15px 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.favorite-meals li {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.favorite-meals li img {
+    width: 45px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.favorite-meals li span {
+    font-size: 0.9rem;
+}
+
+.meal {
+    border-radius: 4px;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    position: relative;
+}
+
+.meal-header .title {
+    position: absolute;
+    top: 0.8rem;
+    left: 0;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.meal-header img {
+    object-fit: cover;
+    width: 100%;
+    height: 250px;
+}
+
+.meal-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.meal-body h4 {
+    margin: 0;
+}
+
+.meal-body .fav-button {
+    border: 0;
+    background-color: transparent;
+    font-size: 1.3rem;
+    color: #a9a9a9;
+}
+
+.fav-button.active {
+    color: red;
+}

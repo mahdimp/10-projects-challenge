@@ -6,12 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
 </head>
 
 <body>
-    
+    <div class="container">
+        <header>
+            <input type="text">
+            <button id="search"><i class="fa fa-search"></i></button>
+        </header>
+        <div class="favorite-container">
+            <h3>Favorite Meals</h3>
+            <ul class="favorite-meals">
+                <li><img src="https://www.themealdb.com/images/media/meals/0jv5gx1661040802.jpg" alt=""><span>Fettuccine
+                        Alfredo</span></li>
+                <li><img src="https://www.themealdb.com/images/media/meals/n7qnkb1630444129.jpg" alt=""><span>Chivito
+                        uruguayo</span></li>
+                <li><img src="https://www.themealdb.com/images/media/meals/u9l7k81628771647.jpg" alt=""><span>Walnut
+                        Roll Gužvara</span></li>
+            </ul>
+        </div>
+        <div class="meals">
+            <div class="meal">
+                <div class="meal-header">
+                    <span class="title">
+                        Random Recipe
+                    </span>
+                    <img src="https://www.themealdb.com/images/media/meals/nv5lf31628771380.jpg" alt="">
+                </div>
+                <div class="meal-body">
+                    <h4>Fresh sardines</h4>
+                    <button class="fav-button"><i class="fa fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
