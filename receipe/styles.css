@@ -21,9 +21,9 @@ body {
     min-height: 100vh;
 }
 
-/* img {
+img {
     max-width: 100%;
-} */
+}
 
 .container {
     width: 375px;
@@ -76,6 +76,7 @@ header button {
 
 .favorite-meals li {
     position: relative;
+    cursor: pointer;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -126,7 +127,7 @@ header button {
     position: relative;
 }
 
-.meal-header .title {
+.meal-header .category {
     position: absolute;
     top: 0.8rem;
     left: 0;
@@ -151,6 +152,7 @@ header button {
 
 .meal-body h4 {
     margin: 0;
+    cursor: pointer;
 }
 
 .meal-body .fav-button {
@@ -163,4 +165,40 @@ header button {
 
 .fav-button.active {
     color: red;
+}
+
+.pop-up-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0, .7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.pop-up-container.visible{
+    display: flex;
+}
+
+.pop-up-container .pop-up{
+    position: relative;
+    background-color: #fff;
+    padding: 3rem;
+    max-width: 375px;
+    border-radius: 0.5rem;
+    height: 500px;
+    overflow: auto;
+}
+
+.pop-up-container .pop-up .close-button{
+    cursor: pointer;
+    font-size: 2rem;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    background-color: transparent;
+    border: 0;
 }

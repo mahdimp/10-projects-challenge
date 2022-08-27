@@ -1,6 +1,9 @@
 
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
+const popupElement = document.getElementById('pop-up');
+const popupCloseElement = document.getElementById('pop-up-close');
+const mealInfoElement = document.getElementById('meal-info');
 
 getRandomMeal();
 displayFavoriteMeals();
@@ -27,8 +30,13 @@ function displayFavoriteMeal(meal) {
     `
 
     favoriteMeal.querySelector('.clear-button').addEventListener('click', (event) => {
+        event.stopPropagation();
         removeMealFromLocalStorage(meal);
         displayFavoriteMeals();
+    })
+
+    favoriteMeal.addEventListener('click', (event) => {
+        displayMealInfo(meal);
     })
 
     favoriteMealsElement.append(favoriteMeal);
@@ -46,7 +54,7 @@ function displayMeal(meal, isRandom = false) {
 
     mealElement.innerHTML = `
     <div class="meal-header">
-        ${isRandom ? `<span class="title"> Random Recipe </span>` : ``}
+        ${isRandom ? `<span class="category"> Random Recipe </span>` : ``}
         <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
     </div>
     <div class="meal-body">
@@ -54,19 +62,23 @@ function displayMeal(meal, isRandom = false) {
         <button class="fav-button"><i class="fa fa-heart"></i></button>
     </div>`;
 
-    const btn = mealElement.querySelector('.meal-body .fav-button');
+    const btnElement = mealElement.querySelector('.meal-body .fav-button');
+    const titleElement = mealElement.querySelector('h4');
 
-    btn.addEventListener('click', (event) => {
-        if (btn.classList.contains('active')) {
+
+    btnElement.addEventListener('click', (event) => {
+        if (btnElement.classList.contains('active')) {
             removeMealFromLocalStorage(meal);
-            btn.classList.remove('active');
+            btnElement.classList.remove('active');
 
         } else {
             addMealToLocalStorage(meal);
-            btn.classList.add('active');
+            btnElement.classList.add('active');
         }
         displayFavoriteMeals();
     });
+
+    titleElement.addEventListener('click', (event) => displayMealInfo(meal))
 
     mealsElement.append(mealElement)
 }
@@ -90,8 +102,56 @@ function clearFavoriteMeals() {
     document.getElementById('favorite-meals').innerHTML = '';
 }
 
-function clearMeals(){
+function clearMeals() {
     document.getElementById('meals').innerHTML = '';
+}
+
+function generateIngredients(meal) {
+    const ingredients = []
+    for (let i = 1; i < 20; i++) {
+        if (!meal[`strIngredient${i}`]) {
+            break;
+        }
+
+        const ingredient = meal[`strIngredient${i}`] + ' - ' + meal[`strMeasure${i}`];
+        console.log(ingredient)
+        ingredients.push(ingredient)
+    }
+
+    return ingredients;
+}
+
+function displayMealInfo(meal) {
+    if (!meal) {
+        return
+    }
+
+    const ingredients = generateIngredients(meal);
+
+    const mealElement = document.createElement('div');
+    mealInfoElement.innerHTML = '';
+
+    mealElement.innerHTML = `
+    <h2>${meal.strMeal}</h2>
+    <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+    <p>${meal.strInstructions}</p>
+    ${ displayIngredients(ingredients) }
+    `
+    mealInfoElement.appendChild(mealElement)
+    popupElement.classList.add('visible')
+}
+
+function displayIngredients(ingredients){
+    console.log(ingredients)
+    if(!ingredients.length){
+        return
+    }
+    return `
+    <h3>Ingredients</h3>
+    <ul class="recipe">
+        ${ingredients.map((ingredient) => '<li>' + ingredient + '</li>').join('')}
+    </ul>
+    `
 }
 
 function removeMealFromLocalStorage(meal) {
@@ -162,3 +222,7 @@ searchButton.addEventListener('click', async () => {
     }
 })
 
+popupCloseElement.addEventListener('click', (event) => {
+    event.stopPropagation();
+    popupElement.classList.remove('visible')
+});
