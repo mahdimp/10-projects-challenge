@@ -112,6 +112,11 @@ header button {
 
 .favorite-meals li span {
     font-size: 0.9rem;
+    width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
 }
 
 .meal {

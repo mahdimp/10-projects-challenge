@@ -20,6 +20,7 @@ function displayFavoriteMeal(meal) {
 
     const favoriteMealsElement = document.getElementById('favorite-meals');
     const favoriteMeal = document.createElement('li');
+    favoriteMeal.title = meal.strMeal;
     favoriteMeal.innerHTML = ` <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
     <span>${meal.strMeal}</span>
     <button class="clear-button"><i class="fa fa-close"></i></button>
@@ -88,7 +89,7 @@ function getMealsFromLocalStorage() {
     return Array.isArray(ids) && ids.length ? ids : []
 }
 
-function clearFavoriteMeals(){
+function clearFavoriteMeals() {
     document.getElementById('favorite-meals').innerHTML = '';
 }
 
