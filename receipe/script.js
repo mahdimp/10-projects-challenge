@@ -1,36 +1,37 @@
 
 getRandomMeal();
-fetchFavoriteMeals();
+displayFavoriteMeals();
 
-
-async function getRandomMeal() {
-    let meal;
-    const randMealApiUrl = `https://themealdb.com/api/json/v1/1/random.php`;
-    const resp = await fetch(randMealApiUrl);
-    const result = await resp.json();
-
-    if (Array.isArray(result.meals) && result.meals.length) {
-        let meal = result.meals[0];
-        displayMeal(meal)
+async function displayFavoriteMeals() {
+    const meals = await fetchFavoriteMeals();
+    clearFavoriteMeals();
+    for (let i = 0; i < meals.length; i++) {
+        displayFavoriteMeal(meals[i]);
     }
 }
 
-async function getMealById(id) {
-    const getMealApiUrl = `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-    const resp = await fetch(getMealApiUrl);
-    let result = await resp.json()
-    let meal;
+function displayFavoriteMeal(meal) {
 
-    if (Array.isArray(result.meals) && result.meals.length) {
-        meal = result.meals[0];
+    console.log(meal)
+
+    if (!meal) {
+        return;
     }
 
-    return meal
-}
+    const favoriteMealsElement = document.getElementById('favorite-meals');
+    const favoriteMeal = document.createElement('li');
+    favoriteMeal.innerHTML = ` <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+    <span>${meal.strMeal}</span>
+    <button class="clear-button"><i class="fa fa-close"></i></button>
+    `
 
-async function getMealsBySearch(term) {
-    const getMealApiUrl = `https://themealdb.com/api/json/v1/1/search.php?s=${term}`;
-    const resp = await fetch(getMealApiUrl);
+    favoriteMeal.querySelector('.clear-button').addEventListener('click', (event) => {
+        removeMealFromLocalStorage(meal);
+        displayFavoriteMeals();
+    })
+
+    favoriteMealsElement.append(favoriteMeal)
+
 }
 
 function displayMeal(meal) {
@@ -66,7 +67,7 @@ function displayMeal(meal) {
             addMealToLocalStorage(meal)
             btn.classList.add('active')
         }
-
+        displayFavoriteMeals();
     });
 
     mealsElement.append(mealElement)
@@ -87,13 +88,45 @@ function getMealsFromLocalStorage() {
     return Array.isArray(ids) && ids.length ? ids : []
 }
 
+function clearFavoriteMeals(){
+    document.getElementById('favorite-meals').innerHTML = '';
+}
+
 function removeMealFromLocalStorage(meal) {
-    console.log(meal)
     const mealIds = getMealsFromLocalStorage();
     localStorage.setItem(
         'recipe-meal-ids',
         JSON.stringify(mealIds.filter((id) => id !== meal.idMeal))
     );
+}
+
+async function getRandomMeal() {
+    const randMealApiUrl = `https://themealdb.com/api/json/v1/1/random.php`;
+    const resp = await fetch(randMealApiUrl);
+    const result = await resp.json();
+
+    if (Array.isArray(result.meals) && result.meals.length) {
+        let meal = result.meals[0];
+        displayMeal(meal)
+    }
+}
+
+async function getMealById(id) {
+    const getMealApiUrl = `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const resp = await fetch(getMealApiUrl);
+    let result = await resp.json()
+    let meal;
+
+    if (Array.isArray(result.meals) && result.meals.length) {
+        meal = result.meals[0];
+    }
+
+    return meal
+}
+
+async function getMealsBySearch(term) {
+    const getMealApiUrl = `https://themealdb.com/api/json/v1/1/search.php?s=${term}`;
+    const resp = await fetch(getMealApiUrl);
 }
 
 async function fetchFavoriteMeals() {
@@ -107,7 +140,6 @@ async function fetchFavoriteMeals() {
         }
     }
 
-    console.log(meals)
     return meals
 }
 
