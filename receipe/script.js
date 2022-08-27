@@ -1,5 +1,7 @@
 
 getRandomMeal();
+fetchFavoriteMeals();
+
 
 async function getRandomMeal() {
     let meal;
@@ -16,20 +18,25 @@ async function getRandomMeal() {
 async function getMealById(id) {
     const getMealApiUrl = `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const resp = await fetch(getMealApiUrl);
-    console.log(resp)
+    let result = await resp.json()
+    let meal;
+
+    if (Array.isArray(result.meals) && result.meals.length) {
+        meal = result.meals[0];
+    }
+
+    return meal
 }
 
 async function getMealsBySearch(term) {
     const getMealApiUrl = `https://themealdb.com/api/json/v1/1/search.php?s=${term}`;
     const resp = await fetch(getMealApiUrl);
-    console.log(resp)
 }
 
-function displayMeal(mealData) {
-    if (!mealData) {
+function displayMeal(meal) {
+    if (!meal) {
         return;
     }
-    console.log(mealData)
 
     const mealsElement = document.getElementById('meals');
     const mealElement = document.createElement('div');
@@ -41,18 +48,66 @@ function displayMeal(mealData) {
         <span class="title">
             Random Recipe
         </span>
-        <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}">
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
     </div>
     <div class="meal-body">
-        <h4>${mealData.strMeal}</h4>
+        <h4>${meal.strMeal}</h4>
         <button class="fav-button"><i class="fa fa-heart"></i></button>
     </div>`;
+
     const btn = mealElement.querySelector('.meal-body .fav-button');
 
     btn.addEventListener('click', (event) => {
-        btn.classList.toggle('active')
+        if (btn.classList.contains('active')) {
+            removeMealFromLocalStorage(meal)
+            btn.classList.remove('active')
+
+        } else {
+            addMealToLocalStorage(meal)
+            btn.classList.add('active')
+        }
+
     });
 
     mealsElement.append(mealElement)
+}
+
+function addMealToLocalStorage(meal) {
+    if (!meal) {
+        return;
+    }
+
+    const mealIds = getMealsFromLocalStorage();
+    localStorage.setItem('recipe-meal-ids', JSON.stringify([...mealIds, meal.idMeal]))
+}
+
+function getMealsFromLocalStorage() {
+    const mealIds = localStorage.getItem('recipe-meal-ids');
+    const ids = JSON.parse(mealIds)
+    return Array.isArray(ids) && ids.length ? ids : []
+}
+
+function removeMealFromLocalStorage(meal) {
+    console.log(meal)
+    const mealIds = getMealsFromLocalStorage();
+    localStorage.setItem(
+        'recipe-meal-ids',
+        JSON.stringify(mealIds.filter((id) => id !== meal.idMeal))
+    );
+}
+
+async function fetchFavoriteMeals() {
+    const mealIds = getMealsFromLocalStorage();
+    const meals = [];
+
+    for (let i = 0; i < mealIds.length; i++) {
+        const meal = await getMealById(mealIds[i])
+        if (meal) {
+            meals.push(meal)
+        }
+    }
+
+    console.log(meals)
+    return meals
 }
 
