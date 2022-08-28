@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-:root{
+:root {
     font-size: 10px;
 }
 
@@ -16,14 +16,28 @@ body {
     margin: 0;
 }
 
-.notes{
+.add-button {
+    cursor: pointer;
+    background: #9ec862;
+    border-radius: 3px;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin: 2rem auto;
+    border: none;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+}
+
+.note {
     background-color: #fff;
     margin: 20px;
     height: 400px;
     width: 400px;
 }
 
-.notes .tools {
+.note .tools {
     background-color: #9ec861;
     display: flex;
     justify-content: flex-end;
@@ -31,21 +45,20 @@ body {
     gap: 0.5em;
 }
 
-.notes .tools button{
+.note .tools button {
     background-color: transparent;
     border: 0;
     color: #fff;
 }
 
-.notes .main{
+.note .main {
     width: 100%;
     height: 100%;
-    padding: .5rem;
+    padding: 0.5rem;
     background-color: orange;
 }
 
-
-.notes textarea{
+.note textarea {
     font-family: inherit;
     width: 100%;
     min-height: 100%;
@@ -54,7 +67,6 @@ body {
     resize: vertical;
 }
 
-.notes .hidden{
+.note .hidden {
     display: none;
 }
-
