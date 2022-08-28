@@ -17,6 +17,6 @@ formElement.addEventListener('submit', (event) => {
         todoItemElement.remove()
     })
 
-
+    inputElement.value = ''
     todoItemsElement.append(todoItemElement)
 })
